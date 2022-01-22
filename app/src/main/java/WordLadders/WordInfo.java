@@ -1,38 +1,48 @@
 
 package WordLadders;
 
+import java.util.ArrayList;
+
+/**
+ * WordInfo - A container to hold a word node and its history of previously
+ * visited values
+ */
 public class WordInfo {
     private String word;
-    private int moves;
-    private String history;
+    private ArrayList<String> history;
+    private int enqueues;
 
-    public WordInfo(String word, int moves) {
-        this.word = word;
-        this.moves = moves;
-        this.history = word;
+    public WordInfo(String data) {
+        this.word = data;
+        this.history = new ArrayList<String>();
     }
 
-    public WordInfo(String word, int moves, String history) {
-        this.word = word;
-        this.moves = moves;
-        this.history = history;
+    public String getData() {
+        return word;
     }
 
-    public String getWord() {
-        return this.word;
+    public ArrayList<String> getHistory() {
+        return history;
     }
 
-    public int getMoves() {
-        return this.moves;
+    public void pushHistory(String word) {
+        this.history.add(word);
     }
 
-    public String getHistory() {
-        return this.history;
+    public void pushHistory(ArrayList<String> history) {
+        for (String word : history) {
+            this.history.add(word);
+        }
+    }
+
+    public void setEnqueues(int enqueues) {
+        this.enqueues = enqueues;
     }
 
     @Override
     public String toString() {
-        return String.format("Word %s Moves %d : History[%s]",
-                word, moves, history);
+        return String.format("%s -> %s : %d Moves %s total enqueues %s",
+                word, history.get(history.size() - 1), history.size() - 1, history, enqueues);
     }
+
 }

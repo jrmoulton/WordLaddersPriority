@@ -11,7 +11,7 @@ public class WordLadders {
         System.out.println();
 
         System.out.println("--- Words One Away from 'slow' ---");
-        for (String word : g.oneAway("slow", false)) {
+        for (String word : g.oneAway("slow")) {
             System.out.println(word);
         }
         System.out.println();

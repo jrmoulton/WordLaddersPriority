@@ -7,35 +7,51 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
-    LadderGame classUnderTest = new LadderGame("dictionary.txt");
-    @Test void appListsWords() {
-		assertArrayEquals(new String[] {"aahing", "aaliis", "abacas", "abacus",
-			"abakas", "abamps", "abased", "abaser", "abases", "abated" }, 
-			classUnderTest.listWords(6, 10).toArray());
-    }
-	@Test void appFindsOneAway() {
-		assertArrayEquals(new String[] {"alow", "blow", "flow", "glow", 
-			"plow", "scow", "show", "slaw", "slew", "slob", "sloe", 
-			"slog", "slop", "slot", "snow", "stow" }, 
-			classUnderTest.oneAway("slow", false).toArray());
+	LadderGame classUnderTest = new LadderGame("dictionary.txt");
+
+	@Test
+	void appListsWords() {
+		assertArrayEquals(new String[] { "aahing", "aaliis", "abacas", "abacus",
+				"abakas", "abamps", "abased", "abaser", "abases", "abated" },
+				classUnderTest.listWords(6, 10).toArray());
 	}
-	@Test void appLadderOopsTots() {
-		// assertArrayEquals(new String[] {"oops", "oots", "tots", }, 
-		// 		classUnderTest.play("oops", "tots").toArray());
-		assertTrue(classUnderTest.play("oops", "tots").size() == 3);
+
+	@Test
+	void appFindsOneAway() {
+		assertArrayEquals(new String[] { "alow", "blow", "flow", "glow",
+				"plow", "scow", "show", "slaw", "slew", "slob", "sloe",
+				"slog", "slop", "slot", "snow", "stow" },
+				classUnderTest.oneAway("slow").toArray());
 	}
-	@Test void appLadderRideAnds() {
-		// assertArrayEquals(new String[] {"ride", "aide", "aids", "ands", }, 
-		// 		classUnderTest.play("ride", "ands").toArray());
-		assertTrue(classUnderTest.play("ride", "ands").size() == 4);
+
+	@Test
+	void appLadderOopsTots() {
+		assertArrayEquals(new String[] { "oops", "oots", "tots", },
+				classUnderTest.play("oops", "tots").toArray());
+		// assertTrue(classUnderTest.play("oops", "tots").size() == 3);
 	}
-	@Test void appLadderHappilyAngrily() {
-		// assertArrayEquals(null, classUnderTest.play("happily", "angrily").toArray());
+
+	@Test
+	void appLadderRideAnds() {
+		assertArrayEquals(new String[] { "ride", "aide", "aids", "ands", },
+				classUnderTest.play("ride", "ands").toArray());
+		// assertTrue(classUnderTest.play("ride", "ands").size() == 4);
+	}
+
+	@Test
+	void appLadderHappilyAngrily() {
 		assertNull(classUnderTest.play("happily", "angrily"));
 	}
-	@Test void appLadderSlowFast() {
-		// assertArrayEquals(new String[] { "slow", "flow", "flaw", "flat", "fiat", "fist", "fast", }, 
-		// 		classUnderTest.play("slow", "fast").toArray());
-		assertTrue(classUnderTest.play("slow", "fast").size() == 7);
+
+	@Test
+	void appLadderSlowFast() {
+		assertArrayEquals(new String[] { "slow", "flow", "flaw", "flat", "fiat", "fist", "fast", },
+				classUnderTest.play("slow", "fast").toArray());
+		// assertTrue(classUnderTest.play("slow", "fast").size() == 7);
+	}
+
+	@Test
+	void appLadderStoneMoney() {
+		assertTrue(classUnderTest.play("stone", "money").size() == 10);
 	}
 }
