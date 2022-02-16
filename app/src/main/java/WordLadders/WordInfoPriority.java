@@ -35,23 +35,29 @@ public class WordInfoPriority extends WordInfo implements Comparable<WordInfoPri
         }
     }
 
-    public int getPriority() {
-        return this.priority;
-    }
+    // public int getPriority() {
+    //     return this.priority;
+    // }
 
-    public String getWord() {
-        return this.word;
-    }
+    // public String getWord() {
+    //     return this.word;
+    // }
 
-    public int getMoves() {
-        return this.moves;
-    }
+    // public int getMoves() {
+    //     return this.moves;
+    // }
 
-    public int getEstimatedWork() {
-        return this.estimatedWork;
-    }
+    // public int getEstimatedWork() {
+    //     return this.estimatedWork;
+    // }
 
-    public ArrayList<String> getHistory() {
-        return this.history;
+    // public ArrayList<String> getHistory() {
+    //     return this.history;
+    // }
+
+    @Override
+    public String toString() {
+        return String.format("Seeking A* solution from %s -> %s\n%s total enqueues %s",
+                history.get(0), history.get(history.size() - 1), history, moves);
     }
 }

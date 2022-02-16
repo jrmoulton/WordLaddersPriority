@@ -42,21 +42,13 @@ public class LadderGamePriority extends LadderGame {
                     fromQueue.pushHistory(end);
                     fromQueue.setMoves(totalMoves);
                     return fromQueue;
-                } else {
-                    var tuple = usedWords.containsValue(fromQueue);
+                } else if (usedWords.contains(fromQueue)) {
                     var tempMoves = fromQueue.getHistory().size();
-                    var estimatedWork = estimateWork(wordOneAway, end, tempMoves);
-                    if (tuple.first) {
-                        if (estimateWork < estimateWork(tuple.second.value, end, tuple.second.getHistory().size()) {
-                            usedWords.
-                        }
-                    }
                     var temp = new WordInfoPriority(wordOneAway, tempMoves, estimateWork(wordOneAway, end, tempMoves));
                     temp.pushHistory(fromQueue.getHistory());
                     temp.pushHistory(wordOneAway);
                     priorityQueue.insert(temp);
                     totalMoves += 1;
-                }
                 }
             }
         }
