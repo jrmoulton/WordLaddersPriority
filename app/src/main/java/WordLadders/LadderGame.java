@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
 
-abstract class LadderGame {
+public abstract class LadderGame {
 
 	protected ArrayList<ArrayList<String>> organizedWords;
 	protected ArrayList<String> unorganizedWords;
+	protected int totalMoves = 0;
 
 	abstract ArrayList<String> play(String start, String end);
-    // abstract ArrayList<String> listWords(int length, int howMany);
-	// abstract ArrayList<String> oneAway(String word);
 
 	/*
 	 * Reads a list of words from a file, putting all words of the same length

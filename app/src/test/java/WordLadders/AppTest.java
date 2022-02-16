@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
-	LadderGame classUnderTest = new LadderGameExhaustive("dictionary.txt");
+	LadderGame classUnderTest = new LadderGameExhaustive("/Users/jaredmoulton/Programming/WordLadders/app/dictionary.txt");
 
 	@Test
 	void appListsWords() {

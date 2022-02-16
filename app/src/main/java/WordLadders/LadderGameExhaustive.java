@@ -7,7 +7,6 @@ public class LadderGameExhaustive extends LadderGame {
 	// private ArrayList<ArrayList<String>> organizedWords;
 	// private ArrayList<String> unorganizedWords;
 	public boolean withRemoval = true;
-	private int totalEnqueues = 0;
 
 	public LadderGameExhaustive(String dictionaryFile) {
 		readDictionary(dictionaryFile);
@@ -29,38 +28,38 @@ public class LadderGameExhaustive extends LadderGame {
 			returnList.add(end);
 			return returnList;
 		}
-		Queue<WordInfo> queue = new Queue<WordInfo>();
-		WordInfo startTemp = new WordInfo(start);
+		Queue<WordInfoExhaustive> queue = new Queue<WordInfoExhaustive>();
+		WordInfoExhaustive startTemp = new WordInfoExhaustive(start);
 		startTemp.pushHistory(start);
 		usedWords.add(start);
 		queue.enqueue(startTemp);
 
 		while (!queue.isEmpty()) {
-			WordInfo fromQueue = queue.dequeue();
-			for (String wordOneAway : oneAway(fromQueue.getData())) {
+			WordInfoExhaustive fromQueue = queue.dequeue();
+			for (String wordOneAway : oneAway(fromQueue.getWord())) {
 				if (wordOneAway.equals(end)) {
 					fromQueue.pushHistory(end);
-					fromQueue.setEnqueues(totalEnqueues);
+					fromQueue.setMoves(totalMoves);
 					System.out.println(fromQueue);
 					return fromQueue.getHistory();
 				} else {
 					if (this.withRemoval) {
 						if (!usedWords.contains(wordOneAway)) {
-							WordInfo temp = new WordInfo(wordOneAway);
+							WordInfoExhaustive temp = new WordInfoExhaustive(wordOneAway);
 							temp.pushHistory(fromQueue.getHistory());
 							temp.pushHistory(wordOneAway);
 							usedWords.add(wordOneAway);
 							queue.enqueue(temp);
-							totalEnqueues += 1;
+							totalMoves += 1;
 						}
 					} else {
 						if (!fromQueue.getHistory().contains(wordOneAway)) {
-							WordInfo temp = new WordInfo(wordOneAway);
+							WordInfoExhaustive temp = new WordInfoExhaustive(wordOneAway);
 							temp.pushHistory(fromQueue.getHistory());
 							temp.pushHistory(wordOneAway);
 							usedWords.add(wordOneAway);
 							queue.enqueue(temp);
-							totalEnqueues += 1;
+							totalMoves += 1;
 						}
 					}
 				}

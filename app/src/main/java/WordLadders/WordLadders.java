@@ -8,8 +8,8 @@ public class WordLadders {
     }
 
     private static void ladderGame() {
-        LadderGame gamePriority = new LadderGamePriority("dictionary.txt");
-        LadderGame gameExhaustive = new LadderGameExhaustive("dictionary.txt");
+        LadderGame gamePriority = new LadderGamePriority("/Users/jaredmoulton/Programming/WordLadders/app/dictionary.txt");
+        LadderGame gameExhaustive = new LadderGameExhaustive("/Users/jaredmoulton/Programming/WordLadders/app/dictionary.txt");
 
         gameExhaustive.play("kiss", "woof");
         gamePriority.play("kiss", "woof");

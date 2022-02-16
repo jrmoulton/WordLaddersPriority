@@ -7,17 +7,12 @@ import java.util.ArrayList;
  * WordInfo - A container to hold a word node and its history of previously
  * visited values
  */
-public class WordInfo {
-    private String word;
-    private ArrayList<String> history;
-    private int enqueues;
+abstract class WordInfo {
+    protected String word;
+    protected ArrayList<String> history;
+    protected int moves;
 
-    public WordInfo(String data) {
-        this.word = data;
-        this.history = new ArrayList<String>();
-    }
-
-    public String getData() {
+    public String getWord() {
         return word;
     }
 
@@ -26,23 +21,29 @@ public class WordInfo {
     }
 
     public void pushHistory(String word) {
+        if (this.history == null) {
+            this.history = new ArrayList<>();
+        }
         this.history.add(word);
     }
 
     public void pushHistory(ArrayList<String> history) {
+        if (this.history == null) {
+            this.history = new ArrayList<>();
+        }
         for (String word : history) {
             this.history.add(word);
         }
     }
 
-    public void setEnqueues(int enqueues) {
-        this.enqueues = enqueues;
+    public void setMoves(int moves) {
+        this.moves = moves;
     }
 
     @Override
     public String toString() {
         return String.format("%s -> %s : %d Moves %s total enqueues %s",
-                word, history.get(history.size() - 1), history.size() - 1, history, enqueues);
+                history.get(0), history.get(history.size() - 1), history.size() - 1, history, moves);
     }
 
 }

@@ -225,6 +225,25 @@ public class AVLTree<E extends Comparable<? super E>> {
         }
 
         return false;   // No match
+
+    }
+
+    public Tuple<Boolean, AvlNode> containsValue(E value) {
+        return containsValue(value, this.root);
+    }
+    private Tuple<Boolean, AvlNode> containsValue(E value, AvlNode node) {
+        while (node != null) {
+            int compareResult = value.compareTo(node.value);
+
+            if (compareResult < 0) {
+                node = node.left;
+            } else if (compareResult > 0) {
+                node = node.right;
+            } else {
+                return new Tuple<Boolean, AvlNode>(true, node);    // Match
+            }
+        }
+        return new Tuple<Boolean, AvlNode>(false, null);   // No match
     }
 
     /**
@@ -306,6 +325,17 @@ public class AVLTree<E extends Comparable<? super E>> {
             return value.toString();
         }
     }
+
+    public class Tuple<A, B> {
+        A first;
+        B second;
+
+        public Tuple(A first, B second) {
+            this.first = first;
+            this.second = second;
+        }
+        public Tuple() {}
+    } 
 
     /**
      * The tree root.
