@@ -1,74 +1,55 @@
 
 package WordLadders;
 
+import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
-import java.util.ArrayList;
 
-public class LadderGame {
-	private ArrayList<ArrayList<String>> organizedWords;
-	private ArrayList<String> unorganizedWords;
-	public boolean withRemoval = true;
-	private int totalEnqueues = 0;
+abstract class LadderGame {
 
-	public LadderGame(String dictionaryFile) {
-		readDictionary(dictionaryFile);
-	}
+	protected ArrayList<ArrayList<String>> organizedWords;
+	protected ArrayList<String> unorganizedWords;
+
+	abstract ArrayList<String> play(String start, String end);
+    // abstract ArrayList<String> listWords(int length, int howMany);
+	// abstract ArrayList<String> oneAway(String word);
 
 	/*
-	 * Print a Word Ladder from start word to end word
+	 * Reads a list of words from a file, putting all words of the same length
+	 * into the same array.
 	 */
-	public ArrayList<String> play(String start, String end) {
-		// DONE: Write some good stuff here
-		ArrayList<String> usedWords = new ArrayList<String>();
-		if (start.length() != end.length()) {
-			System.out.println("Err: The length of the input strings must match");
-			return null;
-		}
-		if (start.equals(end)) {
-			ArrayList<String> returnList = new ArrayList<String>();
-			returnList.add(start);
-			returnList.add(end);
-			return returnList;
-		}
-		Queue<WordInfo> queue = new Queue<WordInfo>();
-		WordInfo startTemp = new WordInfo(start);
-		startTemp.pushHistory(start);
-		usedWords.add(start);
-		queue.enqueue(startTemp);
+	protected void readDictionary(String dictionaryFile) {
+		File file = new File(dictionaryFile);
+		this.organizedWords = new ArrayList<>();
+		this.unorganizedWords = new ArrayList<>();
 
-		while (!queue.isEmpty()) {
-			WordInfo fromQueue = queue.dequeue();
-			for (String wordOneAway : oneAway(fromQueue.getData())) {
-				if (wordOneAway.equals(end)) {
-					fromQueue.pushHistory(end);
-					fromQueue.setEnqueues(totalEnqueues);
-					System.out.println(fromQueue);
-					return fromQueue.getHistory();
-				} else {
-					if (this.withRemoval) {
-						if (!usedWords.contains(wordOneAway)) {
-							WordInfo temp = new WordInfo(wordOneAway);
-							temp.pushHistory(fromQueue.getHistory());
-							temp.pushHistory(wordOneAway);
-							usedWords.add(wordOneAway);
-							queue.enqueue(temp);
-							totalEnqueues += 1;
-						}
-					} else {
-						if (!fromQueue.getHistory().contains(wordOneAway)) {
-							WordInfo temp = new WordInfo(wordOneAway);
-							temp.pushHistory(fromQueue.getHistory());
-							temp.pushHistory(wordOneAway);
-							usedWords.add(wordOneAway);
-							queue.enqueue(temp);
-							totalEnqueues += 1;
-						}
-					}
-				}
+		// Track the longest word, because that tells us how big to make the
+		// array.
+		int longestWord = 0;
+		try (Scanner input = new Scanner(file)) {
+			//
+			// Start by reading all the words into memory.
+			while (input.hasNextLine()) {
+				String word = input.nextLine().toLowerCase();
+				unorganizedWords.add(word);
+				longestWord = Math.max(longestWord, word.length());
 			}
+
+			// DONE: You need to do something here to organize the words into
+			// groups/arrays of words with the same size
+			ArrayList<ArrayList<String>> organizedWords = new ArrayList<ArrayList<String>>(longestWord);
+			for (int i = 0; i <= longestWord; i++) {
+				organizedWords.add(new ArrayList<String>());
+			}
+			for (String word : unorganizedWords) {
+				organizedWords.get(word.length()).add(word);
+			}
+
+			this.organizedWords = organizedWords;
+
+		} catch (java.io.IOException ex) {
+			System.out.println("An error occurred trying to read the dictionary: " + ex);
 		}
-		return null;
 	}
 
 	/*
@@ -78,7 +59,6 @@ public class LadderGame {
 	 * //! dictionary and keeping a copy I just chose to keep a history of the
 	 * //! previously visited values.
 	 */
-
 	public ArrayList<String> oneAway(String word) {
 		// DONE: Write some good stuff here
 		int length = word.length();
@@ -117,43 +97,5 @@ public class LadderGame {
 		}
 		System.out.println(words);
 		return words;
-	}
-
-	/*
-	 * Reads a list of words from a file, putting all words of the same length
-	 * into the same array.
-	 */
-	private void readDictionary(String dictionaryFile) {
-		File file = new File(dictionaryFile);
-		this.organizedWords = new ArrayList<>();
-		this.unorganizedWords = new ArrayList<>();
-
-		// Track the longest word, because that tells us how big to make the
-		// array.
-		int longestWord = 0;
-		try (Scanner input = new Scanner(file)) {
-			//
-			// Start by reading all the words into memory.
-			while (input.hasNextLine()) {
-				String word = input.nextLine().toLowerCase();
-				unorganizedWords.add(word);
-				longestWord = Math.max(longestWord, word.length());
-			}
-
-			// DONE: You need to do something here to organize the words into
-			// groups/arrays of words with the same size
-			ArrayList<ArrayList<String>> organizedWords = new ArrayList<ArrayList<String>>(longestWord);
-			for (int i = 0; i <= longestWord; i++) {
-				organizedWords.add(new ArrayList<String>());
-			}
-			for (String word : unorganizedWords) {
-				organizedWords.get(word.length()).add(word);
-			}
-
-			this.organizedWords = organizedWords;
-
-		} catch (java.io.IOException ex) {
-			System.out.println("An error occurred trying to read the dictionary: " + ex);
-		}
 	}
 }
